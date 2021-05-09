@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login/Register - Parkopedia</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <link href="logo.png" rel="icon">
+    <link href="logo.png" rel="apple-touch-icon">
+  </head>
+  <body>
+    
+    <div class="hero">
+      <img class="logo" src="logo.png" alt="logo">
+      <p class="parkopedia">Parkopedia</p>
+      <div class="form-box">
+        <div class="button-box">
+          <div id="btn"></div>
+          <button type="button" class="toggle-btn" onclick="login()">Log In</button>
+          <button type="button" class="toggle-btn" onclick="register()">Sign Up</button>
+        </div>
+        <form id="login" class="input-group">
+          <input type="text" class="input-field" id="email" placeholder="Email Id" required>
+          <input type="password" class="input-field" id="password" placeholder="Password" required>
+          <input type="checkbox" class="check-box"><span>Remember Password</span>
+          <a onclick="LoginUser()" class="submit-btn">Log In</a> 
+        </form>
+        <form id="register" class="input-group">
+          <input type="text" class="input-field" id="sname" placeholder="User Name" required>
+          <input type="email" class="input-field" id="semail" placeholder="Email Id" required>
+          <input type="password" class="input-field" id="spass" placeholder="Password" required>
+          <input type="checkbox" class="check-box"><span>I agree to the terms and conditions</span>
+          <a onclick="RegisterUser()" class="submit-btn">Sign Up</a> 
+        </form>
+      
+      </div>
+    
+    </div>
+<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCFYtH5XobeZHgkkEA8koz694NxLmC98vc",
+    authDomain: "parkopedia-5f67a.firebaseapp.com",
+    projectId: "parkopedia-5f67a",
+    storageBucket: "parkopedia-5f67a.appspot.com",
+    messagingSenderId: "1070475262654",
+    appId: "1:1070475262654:web:0e996ca4144e0305477cef"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  var x = document.getElementById("login");
+  var y = document.getElementById("register");
+  var z = document.getElementById("btn");
+  
+  function register(){
+    x.style.left = "-400px";
+    y.style.left = "50px";
+    z.style.left = "110px";
+
+  }
+  function login(){
+    x.style.left = "50px";
+    y.style.left = "450px";
+    z.style.left = "0px";
+
+  }
+
+function RegisterUser(){
+      var email=document.getElementById('semail').value;
+      var password=document.getElementById('spass').value;
+      var user=document.getElementById('sname').value;
+      firebase.auth().createUserWithEmailAndPassword(email,password).then(function(){
+        // location.replace("../ProfileSection/profile.html");
+        window.alert('Successfully SignUp!');
+        var id=firebase.auth().currentUser.uid;
+        firebase.database().ref('profile/'+user).set({
+              Email: email
+          });
+      }).catch(function(error){
+    
+        var errorcode=error.code;
+        var errormsg=error.message;
+        window.alert("Error : " +errorMsg)
+        
+      });
+}
+
+function LoginUser(){
+    var email=document.getElementById('email').value;
+    var password=document.getElementById('password').value;
+    firebase.auth().signInWithEmailAndPassword(email,password).then(function(){
+     var id=firebase.auth().currentUser.uid;
+     localStorage.setItem('id',id);
+    //  location.replace("../Landing.html");
+    window.alert('Successfully Login!');
+    window.location.replace('home/index.html');
+    }).catch(function(error){
+ 
+     var errorCode=error.code;
+     var errorMsg=error.message;
+     window.alert("Error : " +errorMsg)
+ 
+    });
+   }
+
+</script>
+
+  </body>
+</html>
