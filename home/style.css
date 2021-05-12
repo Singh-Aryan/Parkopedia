@@ -107,7 +107,7 @@ nav ul li a{
 }
 .title-text p{
     margin: auto;
-    font-size: 20px;   
+    font-size: 20px;
     color: #c67ace;
     font-weight: bold;
     position: relative;
@@ -159,7 +159,7 @@ nav ul li a{
 .features-desc{
    display: flex;
    align-items: center;
-   margin-bottom: 40px; 
+   margin-bottom: 40px;
 }
 
 /*--gallery--*/
@@ -245,4 +245,8 @@ h2{
 h3{
     text-align: center;
     color: #eca3f5;
+}
+.socials {
+  text-align: center;
+  padding: 3px;
 }
